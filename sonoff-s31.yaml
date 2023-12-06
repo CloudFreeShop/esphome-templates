@@ -2,6 +2,10 @@ substitutions:
   name: "sonoff-s31"
   friendly_name: "Sonoff S31"
 
+dashboard_import:
+  package_import_url: github://CloudFreeShop/esphome-templates/sonoff-s31.yaml
+  import_full_config: false
+
 esphome:
   name: "${name}"
   friendly_name: "${friendly_name}"
@@ -10,10 +14,13 @@ esphome:
     name: "CloudFree.S31"
     version: "1.0.1"
 esp8266:
-  board: d1_mini
+  board: esp01_1m
+  early_pin_init: false
 
-logger:
-  baud_rate: 0
+wifi:
+  ap:
+
+captive_portal:
 
 api:
 
@@ -21,6 +28,13 @@ ota:
 
 web_server:
   local: true
+
+logger:
+  baud_rate: 0
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
 
 text_sensor:
   - platform: wifi_info
@@ -61,6 +75,9 @@ sensor:
   - platform: total_daily_energy
     name: "${name} Daily Energy"
     power_id: my_power
+    filters:
+      - multiply: 0.001
+    unit_of_measurement: kWh
 
 switch:
   - platform: gpio
@@ -69,20 +86,7 @@ switch:
     id: relay
     restore_mode: RESTORE_DEFAULT_OFF
 
-time:
-  - platform: sntp
-    id: my_time
-
 status_led:
   pin:
     number: GPIO13
     inverted: True
-
-dashboard_import:
-  package_import_url: github://CloudFreeShop/esphome-templates/sonoff-s31.yaml
-  import_full_config: false
-
-wifi:
-  ap:
-
-captive_portal:
