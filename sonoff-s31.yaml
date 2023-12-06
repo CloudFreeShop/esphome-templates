@@ -10,7 +10,7 @@ esphome:
     name: "CloudFree.S31"
     version: "1.0.0"
 esp8266:
-  board: esp07s
+  board: d1_mini
 
 logger:
   baud_rate: 0
