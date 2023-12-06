@@ -79,7 +79,7 @@ status_led:
     inverted: True
 
 dashboard_import:
-  package_import_url: github://CloudFreeShop/templates/esphome/sonoff-s31.yaml
+  package_import_url: github://CloudFreeShop/esphome-templates/sonoff-s31.yaml
   import_full_config: false
 
 wifi:
