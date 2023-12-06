@@ -12,7 +12,7 @@ esphome:
   name_add_mac_suffix: true
   project:
     name: "CloudFree.S31"
-    version: "1.0.1"
+    version: "1.0.2"
 esp8266:
   board: esp01_1m
   early_pin_init: false
@@ -39,7 +39,7 @@ time:
 text_sensor:
   - platform: wifi_info
     ip_address:
-      name: $friendly_name IP Address
+      name: "${friendly_name} IP Address"
 
 uart:
   rx_pin: RX
@@ -51,29 +51,29 @@ binary_sensor:
       number: GPIO0
       mode: INPUT_PULLUP
       inverted: True
-    name: "${name} Button"
+    name: "${friendly_name} Button"
     on_press:
       - switch.toggle: relay
   - platform: status
-    name: "${name} Status"
+    name: "${friendly_name} Status"
 
 sensor:
   - platform: wifi_signal
-    name: "${name} WiFi Signal"
+    name: "${friendly_name} WiFi Signal"
     update_interval: 60s
   - platform: cse7766
     current:
-      name: "${name} Current"
+      name: "${friendly_name} Current"
       accuracy_decimals: 1
     voltage:
-      name: "${name} Voltage"
+      name: "${friendly_name} Voltage"
       accuracy_decimals: 1
     power:
-      name: "${name} Power"
+      name: "${friendly_name} Power"
       accuracy_decimals: 1
       id: my_power
   - platform: total_daily_energy
-    name: "${name} Daily Energy"
+    name: "${friendly_name} Daily Energy"
     power_id: my_power
     filters:
       - multiply: 0.001
@@ -81,7 +81,7 @@ sensor:
 
 switch:
   - platform: gpio
-    name: "${name} Relay"
+    name: "${friendly_name} Relay"
     pin: GPIO12
     id: relay
     restore_mode: RESTORE_DEFAULT_OFF
