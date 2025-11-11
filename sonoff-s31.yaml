@@ -12,10 +12,14 @@ esphome:
   name_add_mac_suffix: true
   project:
     name: "CloudFree.S31"
-    version: "1.0.2"
+    version: "1.0.8"
 esp8266:
-  board: esp01_1m
+  board: esp12e
   early_pin_init: false
+  restore_from_flash: true
+
+web_server:
+  local: true
 
 wifi:
   ap:
@@ -27,24 +31,20 @@ api:
 ota:
   platform: esphome
 
-web_server:
-  local: true
-
-logger:
-  baud_rate: 0
-
-time:
-  - platform: homeassistant
-    id: homeassistant_time
-
 text_sensor:
   - platform: wifi_info
     ip_address:
       name: "${friendly_name} IP Address"
 
+logger:
+  baud_rate: 0 # (UART logging interferes with cse7766)
+  logs:
+    sensor: DEBUG # (Overide any global setting, to VERBOSE will spamming the cse7766 sensors)
+
 uart:
   rx_pin: RX
   baud_rate: 4800
+  parity: EVEN
 
 binary_sensor:
   - platform: gpio
@@ -86,6 +86,10 @@ switch:
     pin: GPIO12
     id: relay
     restore_mode: RESTORE_DEFAULT_OFF
+
+time:
+  - platform: homeassistant # Required for total_daily_energy
+    id: homeassistant_time
 
 status_led:
   pin:
